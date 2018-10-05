@@ -12,6 +12,11 @@ import (
 	"path/filepath"
 )
 
+// TODO: refactor to cmd package and extract package
+// TODO: allow cli to accept formats
+// TODO: add readme
+// TODO: add .gitignore
+// TODO: add license
 var (
 	gzipPath   = flag.String("gzip", "", "path to tar.gzip file file")
 	outputPath = flag.String("dest", "", "where to write the gzip contents")
