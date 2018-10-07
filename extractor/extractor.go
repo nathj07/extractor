@@ -1,58 +1,18 @@
-package main
+package extractor
 
 import (
 	"archive/tar"
 	"bufio"
 	"compress/gzip"
-	"flag"
 	"fmt"
 	"io"
 	"log"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
-// TODO: refactor to cmd package and extract package; Extract will the return an error
-// TODO: add readme
-// TODO: add .gitignore
-// TODO: add license
-// TODO: will this recurse and unpack directories?
-var (
-	gzipPath   = flag.String("gzip", "", "path to tar.gzip file file")
-	outputPath = flag.String("dest", "", "where to write the gzip contents")
-	exts       = flag.String("exts", "", "optional CSV list of file extensions, if supplied only files with these extensions will be extracted")
-)
-
-func main() {
-	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, `Usage of %s:
-			%s is a tool to unpack a tar.gz archive and list out the files within. Flags:
-			`, os.Args[0], os.Args[0])
-		flag.PrintDefaults()
-	}
-	flag.Parse()
-	if *gzipPath == "" {
-		fmt.Fprintf(os.Stderr, "You must supply a valid path to a tar.gz file")
-		os.Exit(1)
-	}
-
-	dest := *outputPath
-	if dest == "" {
-		dest, _ = os.Getwd()
-		log.Printf("No output path supplied extracting to %s", dest)
-	}
-	formats := map[string]struct{}{}
-	if *exts != "" {
-		for _, ext := range strings.Split(*exts, ",") {
-			// prepend the ext with "."
-			formats["."+ext] = struct{}{}
-		}
-	}
-
-	ExtractTarGz(*gzipPath, dest, formats)
-}
-
+// ExtractTarGz opens the supplied tar.gz archive file and reads the contents to the given destination.
+// If a map of file extension is supplied only those that match will be extracted.
 func ExtractTarGz(gzipPath, dest string, formats map[string]struct{}) {
 	f, err := os.Open(gzipPath)
 	if err != nil {
