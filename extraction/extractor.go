@@ -1,4 +1,4 @@
-package extractor
+package extraction
 
 import (
 	"archive/tar"

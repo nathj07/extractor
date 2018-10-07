@@ -1,4 +1,4 @@
-# TARGX_Extractor
+# Extractor
 
 A simple library, with accompanying CLI to extract files from a `.tar.gz` archive.
 
@@ -15,7 +15,7 @@ file_6.png
 ```
 If you call the CLI as follows:
 
-` ./targz_extractor --gzip ~/myarchive.tar.gz -- dest ~/Desktop --exts "css,js"`
+` ./extractor --gzip ~/myarchive.tar.gz -- dest ~/Desktop --exts "css,js"`
 
 The result would be:
 ```
@@ -25,4 +25,13 @@ The result would be:
 
 This can be very useful when you only want certain files from the archive and the rest can be discarded without ever unpacking them.
 
-In oder to use this in your own projects you simply need to import this package and call the `Extract/tarGz` function. The tests provide clear examples of how to use this; there is no need to instantiate any new objects or manipulate any news structs. The function signature is very simple so you could even add an interface definition in your code that this would implement in order to allow you to mock this should you need to.
+In oder to use this in your own projects you simply need to import this package and call the `extractor.ExtractTarGz` function. The tests provide clear examples of how to use this; there is no need to instantiate any new objects or manipulate any news structs. The function signature is very simple so you could even add an interface definition in your code that this would implement in order to allow you to mock this should you need to.
+
+## Contributing
+In the future this library may be extended to cover other archive formats. If you wish to contribute an `Extract` fuction please do so as follows:
+- make a fork
+- build you Extract function, with good unit test coverage
+- try to follow the signature of the existing `ExtractTarGz` function as this allows either this library, or a caller of the library, to define an interface for mocking in their own tests
+- submit a pull request
+
+It should be that all changes are non-breaking
