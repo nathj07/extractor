@@ -10,16 +10,18 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
-// TODO: refactor to cmd package and extract package
-// TODO: allow cli to accept formats
+// TODO: refactor to cmd package and extract package; Extract will the return an error
 // TODO: add readme
 // TODO: add .gitignore
 // TODO: add license
+// TODO: will this recurse and unpack directories?
 var (
 	gzipPath   = flag.String("gzip", "", "path to tar.gzip file file")
 	outputPath = flag.String("dest", "", "where to write the gzip contents")
+	exts       = flag.String("exts", "", "optional CSV list of file extensions, if supplied only files with these extensions will be extracted")
 )
 
 func main() {
@@ -34,15 +36,21 @@ func main() {
 		fmt.Fprintf(os.Stderr, "You must supply a valid path to a tar.gz file")
 		os.Exit(1)
 	}
+
 	dest := *outputPath
 	if dest == "" {
 		dest, _ = os.Getwd()
+		log.Printf("No output path supplied extracting to %s", dest)
 	}
 	formats := map[string]struct{}{}
-	formats[".nxml"] = struct{}{}
-	formats[".pdf"] = struct{}{}
-	formats[".html"] = struct{}{}
-	ExtractTarGz(*gzipPath, dest, nil)
+	if *exts != "" {
+		for _, ext := range strings.Split(*exts, ",") {
+			// prepend the ext with "."
+			formats["."+ext] = struct{}{}
+		}
+	}
+
+	ExtractTarGz(*gzipPath, dest, formats)
 }
 
 func ExtractTarGz(gzipPath, dest string, formats map[string]struct{}) {
