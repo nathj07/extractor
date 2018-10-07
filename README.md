@@ -1,5 +1,11 @@
 # Extractor
 
+## NOTICE: 
+This library and it's API are currently subject to minor change. 
+
+----
+
+
 A simple library, with accompanying CLI to extract files from a `.tar.gz` archive.
 
 What is particularly useful about both the library and the CLI is that you can specify not only the archive location and the unpack location, but also the file extensions you wish to unpack.
