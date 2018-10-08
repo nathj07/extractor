@@ -7,19 +7,16 @@ import (
 	"os"
 	"strings"
 
-	"github.com/nathj07/extractor/extraction"
+	"github.com/nathj07/extractor/targz"
 )
 
-// TODO: add license
 // TODO: will this recurse and unpack directories?
-// TODO: exclude extensions?
-// TOTO: named files to extract?
 // TODO: Have the extract function return errors not log
 // TODO: unit test coverage of the extract method
 
 var (
-	gzipPath   = flag.String("gzip", "", "path to tar.gzip file file")
-	outputPath = flag.String("dest", "", "where to write the gzip contents")
+	gzipPath   = flag.String("source", "", "path to archive file to extract")
+	outputPath = flag.String("dest", "", "where to write the extracted files")
 	exts       = flag.String("exts", "", "optional CSV list of file extensions, if supplied only files with these extensions will be extracted")
 )
 
@@ -49,5 +46,5 @@ func main() {
 		}
 	}
 
-	extraction.ExtractTarGz(*gzipPath, dest, formats)
+	targz.Extract(*gzipPath, dest, formats)
 }
