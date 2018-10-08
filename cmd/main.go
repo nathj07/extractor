@@ -15,7 +15,7 @@ import (
 // TODO: unit test coverage of the extract method
 
 var (
-	gzipPath   = flag.String("source", "", "path to archive file to extract")
+	source     = flag.String("source", "", "path to archive file to extract")
 	outputPath = flag.String("dest", "", "where to write the extracted files")
 	exts       = flag.String("exts", "", "optional CSV list of file extensions, if supplied only files with these extensions will be extracted")
 )
@@ -28,7 +28,7 @@ func main() {
 		flag.PrintDefaults()
 	}
 	flag.Parse()
-	if *gzipPath == "" {
+	if *source == "" {
 		fmt.Fprintf(os.Stderr, "You must supply a valid path to a tar.gz file")
 		os.Exit(1)
 	}
@@ -46,5 +46,9 @@ func main() {
 		}
 	}
 
-	targz.Extract(*gzipPath, dest, formats)
+	files, err := targz.Extract(*source, dest, formats)
+	if err != nil {
+		log.Fatalf("failed to extract data: %v", err)
+	}
+	log.Printf("Unpacked %d file(s) from %s into %s", len(files), *source, dest)
 }

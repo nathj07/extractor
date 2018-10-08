@@ -23,7 +23,7 @@ If you call the CLI as follows:
 
 ` ./extractor --source ~/myarchive.tar.gz -- dest ~/Desktop --exts "css,js"`
 
-The result would be:
+The result in the directory would be:
 ```
 ~/Desktop/myarchive/file_4.css
 ~/Desktop/myarchive/file_5.js
@@ -37,7 +37,7 @@ In oder to use this in your own projects you simply need to import this package 
 In the future this library may be extended to cover other archive formats. If you wish to contribute an `Extract` fuction please do so as follows:
 - Make a fork
 - Create a new package for the extractor, e.g. rar and add the new `extractor.go`
-- Follow the signature of the existing `ExtractTarGz` function as this allows either this library, or a caller of the library, to define an interface for mocking in their own tests
+- Follow the signature of the existing `targz.Extract` function as this allows either this library, or a caller of the library, to define an interface for mocking in their own tests
 - submit a pull request
 
 It should be that all changes are non-breaking
