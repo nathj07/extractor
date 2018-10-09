@@ -12,10 +12,10 @@ import (
 
 // Extract opens the supplied tar.gz archive file and reads the contents to the given destination.
 // If a map of file extension is supplied only those that match will be extracted.
-// The returned slice holds the paths to all the extracted files. If there is an error retuned the
+// The returned slice holds the paths to all the extracted files. If there is an error returned the
 // slice will be nil.
-func Extract(gzipPath, dest string, formats map[string]struct{}) ([]string, error) {
-	f, err := os.Open(gzipPath)
+func Extract(archive, dest string, formats map[string]struct{}) ([]string, error) {
+	f, err := os.Open(archive)
 	if err != nil {
 		return nil, fmt.Errorf("Error opening gzip file: %v", err)
 	}
@@ -41,8 +41,8 @@ func Extract(gzipPath, dest string, formats map[string]struct{}) ([]string, erro
 
 		switch header.Typeflag {
 		case tar.TypeDir:
-			if err := os.Mkdir(filepath.Join(dest, header.Name), 0755); err != nil {
-				return nil, fmt.Errorf("ExtractTarGz: Mkdir() failed: %s", err.Error())
+			if err := os.MkdirAll(filepath.Join(dest, header.Name), 0755); err != nil {
+				return nil, fmt.Errorf("ExtractTarGz: MkdirAll() failed: %s", err.Error())
 			}
 		case tar.TypeReg:
 			if len(formats) > 0 {
@@ -60,7 +60,7 @@ func Extract(gzipPath, dest string, formats map[string]struct{}) ([]string, erro
 			}
 			extracted = append(extracted, outFile.Name())
 		default:
-			return nil, fmt.Errorf("ExtractTarGz: unknown type: %s in %s", header.Typeflag, header.Name)
+			return nil, fmt.Errorf("ExtractTarGz: unknown type: %s in %s", string(header.Typeflag), header.Name)
 		}
 	}
 	return extracted, nil

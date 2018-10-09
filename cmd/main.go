@@ -11,8 +11,9 @@ import (
 )
 
 // TODO: will this recurse and unpack directories?
-// TODO: Have the extract function return errors not log
-// TODO: unit test coverage of the extract method
+// TODO: set up circleci on github
+// TODO: define a determineType method
+// TODO: implement zip.Extract()
 
 var (
 	source     = flag.String("source", "", "path to archive file to extract")
@@ -29,8 +30,7 @@ func main() {
 	}
 	flag.Parse()
 	if *source == "" {
-		fmt.Fprintf(os.Stderr, "You must supply a valid path to a tar.gz file")
-		os.Exit(1)
+		log.Fatal("You must supply a valid path to a tar.gz file")
 	}
 
 	dest := *outputPath
