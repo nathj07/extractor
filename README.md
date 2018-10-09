@@ -1,5 +1,5 @@
 # Extractor
-[![CircleCI](https://circleci.com/gh/nathj07/extractor/tree/master.svg?style=svg&circle-token=0c9fb37da87f3dd9f9758a5c6fb279b626f760db)](https://circleci.com/gh/nathj07/extractor/tree/master)
+[![CircleCI](https://circleci.com/gh/nathj07/extractor/tree/master.svg?style=svg&circle-token=8b1091a3df80730a9a2ce2f080a2b6d7f25e92d4)](https://circleci.com/gh/nathj07/extractor/tree/master)
 
 ## NOTICE: 
 This library and it's API are currently subject to minor change. 
